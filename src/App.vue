@@ -15,7 +15,7 @@
           <div class="view">
             <input class="toggle" type="checkbox" v-model="item.completed">
             <label @dblclick="editModel(item)">{{item.title}}</label>
-            <button class="destroy"></button>
+            <button class="destroy" @click="destroy(index)"></button>
           </div>
           <input class="edit" type="text" v-focus="editTodo == item" @blur="editModelRemove" v-model="item.title" @keyup.esc="beforeTitle(item)">
         </li>
@@ -46,7 +46,7 @@
         <li><a href="#/active">Active</a></li>
         <li><a href="#/completed">Completed</a></li>
       </ul>
-      <button class="clear-completed">Clear completed</button>
+      <button class="clear-completed" @click="clearCompleted">删除已完成</button>
     </footer>
     <!-- <footer class="info">
     <p>Double-click to edit a todo</p>
@@ -108,6 +108,13 @@ export default {
         completed: false
       })
       this.newtodo = ''
+    },
+    destroy (index) {
+      this.todos.splice(index, 1)
+    },
+    clearCompleted () {
+      let todos = this.todos.filter(data => data.completed === false)
+      this.todos = todos
     }
     // toggleCompleted(index){
     //   this.todos[index].completed = !this.todos[index].completed
