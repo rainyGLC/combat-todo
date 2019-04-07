@@ -6,8 +6,9 @@
       <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newtodos">
     </header>
     <section class="main">
-      <input id="toggle-all" class="toggle-all" type="checkbox">
-      <label for="toggle-all">Mark all as complete</label>
+      <input id="toggle-all" class="toggle-all" type="checkbox"
+        :checked="chooseAll">
+      <label for="toggle-all" @click="toggleAll">Mark all as complete</label>
       <ul class="todo-list">
         <li :class="['todo' , {'completed' : item.completed }, {'editing': editTodo == item}]" v-for="(item,index) in todos" :key="index">
           <div class="view">
@@ -73,6 +74,11 @@ export default {
       }]
     }
   },
+  computed: {
+    chooseAll () {
+      return this.todos.every(data => data.completed)
+    }
+  },
   methods: {
     editModel (todo) {
       this.beforeEdit = todo.title
@@ -85,6 +91,14 @@ export default {
     beforeTitle (item) {
       item.title = this.beforeEdit
       this.editModelRemove()
+    },
+    toggleAll (e) {
+      let chooseAll = this.chooseAll
+      console.log(chooseAll)
+      // this.todos.forEach(data => data.completed = !chooseAll)
+      this.todos.forEach(function (data) {
+        data.completed = !chooseAll
+      })
     }
     // toggleCompleted(index){
     //   this.todos[index].completed = !this.todos[index].completed
