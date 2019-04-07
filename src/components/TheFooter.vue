@@ -1,44 +1,42 @@
 <template>
-  <footer class="footer" v-show="todos.length">
+  <footer class="footer" v-show="todoCount">
     <span class="todo-count">
-      <strong>{{todos.length}}</strong> 总数
+      <strong>{{todoCount}}</strong> 总数
     </span>
     <ul class="filters">
-      <li v-for="(item,key) in filters"
-        @click="changeFilter(key,$event)" :key="item">
-        <a href="javascript:;" :class="[filter === key && 'selected']">{{item}}</a>
+      <li v-for="(item,key) in filters" :key="item">
+       <!--  @click="changeFilter(key,$event)" :key="item"> -->
+       <!--  <a href="javascript:;" :class="[filter === key && 'selected']">{{item}}</a> -->
+        <router-link :class="[filter === key && 'selected']" :to="'/' + key">{{item}}</router-link>
       </li>
     </ul>
-    <button class="clear-completed" @click="clearCompleted">删除已完成</button>
+    <button v-if="hasCompleted" class="clear-completed" @click="clearCompleted">删除已完成</button>
   </footer>
 </template>
 
 <script>
 export default {
-  props: {
-    todos: {
-      type: Array,
-      default: function () {
-        return []
-      }
+  computed: {
+    filter () {
+      return this.$store.state.filter
     },
-    filters: {
-      type: Object,
-      default: function () {
-        return {}
-      }
+    filters () {
+      return this.$store.state.filters
     },
-    filter: {
-      type: String,
-      default: 'all'
+    hasCompleted () {
+      return this.$store.getters.hasCompleted
+    },
+    todoCount () {
+      return this.$store.getters.todoCount
     }
   },
   methods: {
-    changeFilter (key, event) {
-      this.$emit('change-filter', key)
-    },
+    // changeFilter (key, event) {
+    //   console.log(key)
+    //   this.$store.commit('changeFilter', key)
+    // },
     clearCompleted () {
-      this.$emit('clear-completed')
+      this.$store.commit('removeCompleted')
     }
   }
 }

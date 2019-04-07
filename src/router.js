@@ -1,14 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import Todos from './views/Todos'
 
 Vue.use(Router)
 
-// export default new Router({
-//   mode: 'history',
-//   base: process.env.BASE_URL,
-//   routes: [
-//     {
-
-//     },
-//   ]
-// })
+export default new Router({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      component: Todos
+    },
+    {
+      path: '/:id',
+      component: Todos
+    }
+  ]
+})

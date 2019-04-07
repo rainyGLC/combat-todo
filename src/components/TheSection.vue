@@ -19,32 +19,28 @@
 <script>
 export default {
   props: {
-    todos: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    },
-    filter: {
-      type: String,
-      default: 'all'
-    },
-    beforeEdit: {
-      type: String,
-      default: ''
-    },
-    editTodo: {
-      type: Object,
-      default: null
-    }
+    // beforeEdit: {
+    //   type: String,
+    //   default: ''
+    // },
+    // editTodo: {
+    //   type: Object,
+    //   default: null
+    // }
   },
   data () {
     return {
-      // beforeEdit: '',
-      // editTodo: null
+      beforeEdit: '',
+      editTodo: null
     }
   },
   computed: {
+    todos () {
+      return this.$store.state.todos
+    },
+    filter () {
+      return this.$store.state.filter
+    },
     chooseAll () {
       return this.todos.every(data => data.completed)
     },
@@ -65,19 +61,25 @@ export default {
   methods: {
     toggleAll () {
       let value = this.chooseAll
-      this.$emit('toggle-all', value)
+      // this.$emit('toggle-all', value)
+      this.$store.commit('toggleAll', value)
     },
     editModel (item) {
-      this.$emit('edit-model', item)
+      this.editTodo = item
+      this.beforeEdit = item.title
     },
     destroy (index) {
-      this.$emit('destroy-del', index)
+      // this.$emit('destroy-del', index)
+      this.$store.commit('removeTodo', index)
     },
     editModelRemove () {
-      this.$emit('editmodel-remove')
+      this.editTodo = null
+      this.beforeEdit = ''
     },
     beforeTitle (item) {
-      this.$emit('before-title', item)
+      item.title = this.beforeEdit
+      this.editTodo = null
+      this.beforeEdit = ''
     }
   },
   directives: {

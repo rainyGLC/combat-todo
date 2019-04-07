@@ -16,7 +16,11 @@ export default {
   methods: {
     createTodo () {
       let value = this.newtodo
-      this.$emit('add-todos', value)
+      // this.$emit('add-todos', value)
+      this.$store.commit('addTodo', {
+        title: value,
+        completed: false
+      })
       this.newtodo = ''
     }
   }
