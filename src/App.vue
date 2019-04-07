@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="todoapp">
+
     <header class="header">
       <h1>todos</h1>
       <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newtodos">
@@ -8,15 +9,30 @@
       <input id="toggle-all" class="toggle-all" type="checkbox">
       <label for="toggle-all">Mark all as complete</label>
       <ul class="todo-list">
-        <li :class="[item.completed ? 'completed' : 'todo']" v-for="(item,index) in todos">
+        <li :class="['todo' , {'completed' : item.completed }, {'editing': editTodo == item}]" v-for="(item,index) in todos" :key="index">
           <div class="view">
-            <input class="toggle" type="checkbox" :checked="item.completed"
-              @click="toggleCompleted(index)">
-            <label>{{item.title}}</label>
+            <input class="toggle" type="checkbox" v-model="item.completed">
+            <label @dblclick="editModel(item)">{{item.title}}</label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" type="text" v-focus="editTodo == item" @blur="editModelRemove" v-model="item.title" @keyup.esc="beforeTitle(item)">
+        </li>
+       <!--  <li class="todo editing">
+          <div class="view">
+            <input class="toggle" type="checkbox" >
+            <label>代办 二</label>
             <button class="destroy"></button>
           </div>
           <input class="edit" type="text">
-        </li>
+        </li> -->
+       <!--  <li class="todo">
+          <div class="view">
+            <input class="toggle" type="checkbox" >
+            <label>代办 三</label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" type="text">
+        </li> -->
       </ul>
     </section>
     <footer class="footer">
@@ -42,29 +58,45 @@
 import '@/assets/css/base.css'
 import '@/assets/css/index.css'
 export default {
-  name:'app',
-  data() {
+  name: 'app',
+  data () {
     return {
-      newtodos:'',
+      beforeEdit: '',
+      editTodo: null,
+      newtodos: '',
       todos: [{
         title: '代办一',
-        completed:true
+        completed: true
+      }, {
+        title: '代办二',
+        completed: false
       }]
     }
   },
-  methods:{
-    toggleCompleted(index){
-      this.todos[index].completed = !this.todos[index].completed
+  methods: {
+    editModel (todo) {
+      this.beforeEdit = todo.title
+      this.editTodo = todo
+    },
+    editModelRemove () {
+      this.beforeEdit = ''
+      this.editTodo = null
+    },
+    beforeTitle (item) {
+      item.title = this.beforeEdit
+      this.editModelRemove()
+    }
+    // toggleCompleted(index){
+    //   this.todos[index].completed = !this.todos[index].completed
+    // }
+  },
+  directives: {
+    focus: function (el) {
+      el.focus()
     }
   }
 }
 </script>
 
 <style lang="less">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
 </style>
