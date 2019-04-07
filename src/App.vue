@@ -3,7 +3,8 @@
 
     <header class="header">
       <h1>todos</h1>
-      <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newtodos">
+      <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" v-model="newtodo"
+      @keyup.enter="create">
     </header>
     <section class="main">
       <input id="toggle-all" class="toggle-all" type="checkbox"
@@ -64,7 +65,7 @@ export default {
     return {
       beforeEdit: '',
       editTodo: null,
-      newtodos: '',
+      newtodo: '',
       todos: [{
         title: '代办一',
         completed: true
@@ -99,6 +100,14 @@ export default {
       this.todos.forEach(function (data) {
         data.completed = !chooseAll
       })
+    },
+    create (e) {
+      let value = this.newtodo
+      this.todos.push({
+        title: value,
+        completed: false
+      })
+      this.newtodo = ''
     }
     // toggleCompleted(index){
     //   this.todos[index].completed = !this.todos[index].completed
