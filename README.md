@@ -28,7 +28,35 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
+### 项目名称
+一个轻量而高效的待办清单，无论是工作计划，个人生活或者家庭学习，都能保证你更好的完成自己的事项。
 
+
+本项目为 Vue 构建 Todos 应用，通过对数据的操作驱动视图变化，完成 Todo 项目的增删改查，并使用 Vue Router 和 Vuex 生态插件进行路由的控制和全局数据的处理。
+
+掌握以下知识点:
+1. Vue CLI , 快速构建 Vue 项目
+2. Vue data 数据的绑定
+3. Vue class 属性绑定
+4. Vue methods 事件的绑定
+5. Vue computed 计算属性
+6. Vue watch 侦听器
+7. Vue directive 自定义指令
+8. Vue.component 组件分离、组件间数据传递
+9. Vue Router 路由管理
+10. Vuex 数据管理
+
+文档
+
+1. Vue 官方文档,  https://cn.vuejs.org/
+2. Vue CLI , https://cli.vuejs.org/
+3. Vue Router , https://router.vuejs.org/zh/
+4. Vuex, https://vuex.vuejs.org/zh/
+5. Scrimba 相关教程，https://scrimba.com/g/glearnvue
+
+
+
+需注意点问题点:
 
 任务添加路由中
 在底部导航配置 router-link

@@ -16,24 +16,8 @@
             <label @dblclick="editModel(item)">{{item.title}}</label>
             <button class="destroy" @click="destroy(index)"></button>
           </div>
-          <input class="edit" type="text" v-focus="editTodo == item" @blur="editModelRemove" v-model="item.title" @keyup.esc="beforeTitle(item)">
+          <input class="edit" type="text" v-focus @blur="editModelRemove" v-model="item.title" @keyup.esc="beforeTitle(item)">
         </li>
-       <!--  <li class="todo editing">
-          <div class="view">
-            <input class="toggle" type="checkbox" >
-            <label>代办 二</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" type="text">
-        </li> -->
-       <!--  <li class="todo">
-          <div class="view">
-            <input class="toggle" type="checkbox" >
-            <label>代办 三</label>
-            <button class="destroy"></button>
-          </div>
-          <input class="edit" type="text">
-        </li> -->
       </ul>
     </section>
     <footer class="footer" v-show="todos.length">
